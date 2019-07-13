@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block scripts %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="{{url_for('.static', filename='js/game.js')}}"></script>
+    <script type="text/javascript"> var $SCRIPT_ROOT = {{ request.script_root |tojson |safe }};</script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="{{url_for('static', filename='jquery.js') }}">\x3C/script>')</script>
+    {{super()}}
+{% endblock %}
+
+{% block app_content %}
+    <h1 class="home-title" id="title">MAFIA</h1>
+    <h2 class="game-info" id="game-info">Room - {{ room.code }}</h2>
+    <h3 id="day-info" class="day-info" style="display: none"> </h3>
+    <h3 id="phase-info" class="phase-info" style="display: none"></h3>
+    <h3 id="game-header" class="game-header">You are {{ current_user.username }}</h3>
+    <h3 id="timer" class="timer"></h3>
+
+    {% if current_user.isHost == True and room.isActive == False %}
+    <button id="start" type="button" class="game-room-start" style="display:block;">Start Game</button>
+    {% endif %}
+
+    <h3 id="enough" style="display: none; color: red; font-size: 20px">Need at least 4 players to start</h3>
+
+    <h2 class="players" id="winners">Players:</h2>
+    <div class="row">
+        <div class="col-6">
+            <div id="player-list">
+                {% for player in player_list %}
+                    <div class="user">{{ player.username }}</div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-6">
+            <div id="button-list" class="button-list"></div>
+        </div>
+    </div>
+
+    <h2 class="players" id="losers" style="display: none"></h2>
+    <div id="player-list-2" style="display: none"></div>
+
+    <div id="mafia-members"></div>
+
+    <div id="previous-info" class="previous-info"></div>
+
+    <div id="voting-info"></div>
+
+    <div id="verdict-text"></div>
+    <div id="verdict" style="display: none">
+        <button class="vote btn-dark" id="yes" type="button">Yes</button>
+        <button class="vote btn-dark" id="no" type="button">No</button>
+    </div>
+
+{% endblock %}

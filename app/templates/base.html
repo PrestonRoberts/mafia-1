@@ -1,0 +1,27 @@
+{% extends 'bootstrap/base.html' %}
+
+{% block styles %}
+{{super()}}
+    <link rel="stylesheet" href="{{url_for('.static', filename='css/custom.css')}}">
+    <link rel="stylesheet" href="{{url_for('.static', filename='css/mainstyle.css')}}">
+{% endblock %}
+
+
+{% block title %}
+    {% if title %} Mafia - {{ title }} {% else %} Mafia {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-info" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+         {# application content needs to be provided in the app_content block #}
+         {% block app_content %}{% endblock %}
+    </div>
+{% endblock %}

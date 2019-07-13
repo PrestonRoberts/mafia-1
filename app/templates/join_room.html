@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <div class="create center-it">
+        <a href="{{ url_for('index') }}'" ><h1 class="home-title">MAFIA</h1></a>
+        <h2 class="join">Join Room</h2>
+        <form class="form-container" method="post" role="form">
+            {{ form.hidden_tag() }}
+            {{ wtf.form_errors(form, hiddens="only") }}
+
+            {{ form.name(class_="form-name", placeholder="Your Name") }} <br>
+            {{ form.code(class_="form-name", placeholder="Room Code") }} <br>
+            {{ form.submit(class_="btn-s") }}
+        </form>
+    </div>
+{% endblock %}
